@@ -2,290 +2,141 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>AllFit — Training & Diet</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AllFit - Versão GitHub</title>
 <style>
-:root{--acc:#f72585;--acc2:#ff85b3;--acc-dim:rgba(247,37,133,.12);--acc-text:#c41060;--bg:#fff0f5;--bg2:#fff;--bg3:#fce4ed;--text:#1a0a10;--muted:#9e7080;--border:rgba(200,80,120,.15);--shadow:rgba(200,50,100,.08);--radius:18px;--nav-bg:#fff;--acc-solid:#f72585}
-[data-theme="pink-black"]{--acc:#f72585;--acc2:#ff4da6;--acc-dim:rgba(247,37,133,.18);--acc-text:#ff85b3;--bg:#0a0006;--bg2:#160010;--bg3:#22001a;--text:#fce4ed;--muted:#9e7080;--border:rgba(247,37,133,.18);--shadow:rgba(247,37,133,.12);--nav-bg:#160010;--acc-solid:#f72585}
-[data-theme="pink-white"]{--acc:#f72585;--acc2:#ff85b3;--acc-dim:rgba(247,37,133,.08);--acc-text:#c41060;--bg:#fff;--bg2:#fff;--bg3:#fce4ed;--text:#1a0a10;--muted:#b08090;--border:rgba(200,80,120,.12);--shadow:rgba(200,80,120,.06);--nav-bg:#fff;--acc-solid:#f72585}
-/* ... outros temas permanecem iguais ... */
-[data-theme="blue"]{--acc:#3a86ff;--acc2:#74aeff;--acc-dim:rgba(58,134,255,.12);--acc-text:#1360cc;--bg:#f0f5ff;--bg2:#fff;--bg3:#dce9ff;--text:#060e2a;--muted:#6080b0;--border:rgba(60,120,220,.15);--shadow:rgba(30,80,200,.08);--nav-bg:#fff;--acc-solid:#3a86ff}
-[data-theme="blue-black"]{--acc:#3a86ff;--acc2:#74aeff;--acc-dim:rgba(58,134,255,.18);--acc-text:#74aeff;--bg:#00060f;--bg2:#000e1e;--bg3:#001530;--text:#dce9ff;--muted:#6080b0;--border:rgba(58,134,255,.18);--shadow:rgba(58,134,255,.1);--nav-bg:#000e1e;--acc-solid:#3a86ff}
-[data-theme="blue-white"]{--acc:#3a86ff;--acc2:#74aeff;--acc-dim:rgba(58,134,255,.08);--acc-text:#1360cc;--bg:#fff;--bg2:#fff;--bg3:#dce9ff;--text:#060e2a;--muted:#8090b0;--border:rgba(60,120,220,.1);--shadow:rgba(30,80,200,.05);--nav-bg:#fff;--acc-solid:#3a86ff}
-
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;transition:background .3s,color .3s;display:flex;flex-direction:column}
-#appShell{display:flex;flex-direction:column;height:100%}
-.screen{display:none;flex-direction:column;height:100%}
-.screen.active{display:flex}
-
-/* AUTH */
-#authScreen{background:var(--bg);align-items:center;justify-content:center;padding:32px 24px;overflow-y:auto}
-.auth-logo{text-align:center;margin-bottom:32px}
-.auth-brand{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:4px;color:var(--text)}
-.auth-brand span{color:var(--acc-solid)}
-.auth-sub{font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:-4px}
-.auth-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;width:100%;max-width:380px;box-shadow:0 8px 32px var(--shadow)}
-.auth-tabs{display:flex;background:var(--bg3);border-radius:12px;padding:4px;margin-bottom:20px}
-.auth-tab{flex:1;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);transition:.2s}
-.auth-tab.active{background:var(--bg2);color:var(--acc-text);box-shadow:0 2px 8px var(--shadow)}
-.auth-field{margin-bottom:14px}
-.auth-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.auth-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:.2s}
-.auth-field input:focus{border-color:var(--acc-solid)}
-.auth-btn-main{width:100%;background:var(--acc-solid);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;cursor:pointer;margin-top:4px}
-
-/* ONBOARD */
-.ob-wrap{padding:24px 20px 40px;max-width:480px;margin:0 auto}
-.ob-field{margin-bottom:14px}
-.ob-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
-.ob-field input,.ob-field select, .ob-field textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none}
-.ob-field textarea{height: 80px; resize: none;}
-
-/* DIET EDITABLE TIME */
-.meal-time-input{font-size:12px;color:var(--acc-text);background:var(--bg2);border:1px solid var(--acc-solid);border-radius:6px;padding:2px 6px;outline:none;width:70px; font-weight: bold;}
-
-/* Restante do CSS do arquivo original... */
-/* ... (Mantido para brevidade) ... */
-/* Adicionando classes faltantes para o funcionamento básico */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:0 2px 8px var(--shadow)}
-.card-title{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;color:var(--acc-text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 16px;display:flex;justify-content:space-between;align-items:center;height:56px;flex-shrink:0;box-shadow:0 2px 12px var(--shadow);position:relative;z-index:200}
-.nav-tab{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:5px 8px;border-radius:10px;cursor:pointer}
-.nav-tab.active{background:var(--acc-dim);color:var(--acc-text);font-weight:700}
-.scroll-area{flex:1;overflow-y:auto}
-.macro-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
-.macro-card{background:var(--bg3);border-radius:12px;padding:14px;text-align:center;border:1px solid var(--border)}
-.macro-val{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--acc-text)}
-.macro-lbl{font-size:11px;color:var(--muted)}
-.meal-block{margin-bottom:16px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.meal-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg3)}
-.meal-opts{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
-.meal-opt{background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px}
-.meal-opt.selected{border-color:var(--acc-solid);background:var(--acc-dim)}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--acc-text);color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;transition:.3s;opacity:0;z-index:999}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+body{font-family:Arial;background:#111;color:#fff;margin:0}
+.container{padding:20px;max-width:500px;margin:auto}
+input,button{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none}
+button{background:#f72585;color:#fff;cursor:pointer}
+.card{background:#1c1c1c;padding:15px;border-radius:12px;margin-bottom:10px}
 </style>
 </head>
 <body>
-<div id="appShell">
 
-<div class="screen active" id="authScreen">
-  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;">
-    <div class="auth-logo">
-      <div class="auth-brand"><span>ALL</span>FIT</div>
-      <div class="auth-sub">Training &amp; Diet</div>
-    </div>
-    <div class="auth-card">
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Entrar</div>
-        <div class="auth-tab" id="tabReg" onclick="switchAuthTab('register')">Criar conta</div>
-      </div>
-      <div id="authLoginForm">
-        <div class="auth-field"><label>Email</label><input type="email" id="loginEmail" placeholder="seu@email.com"></div>
-        <div class="auth-field"><label>Senha</label><input type="password" id="loginPass" placeholder="••••••••"></div>
-        <button class="auth-btn-main" onclick="doLogin()">ENTRAR</button>
-      </div>
-      <div id="authRegisterForm" style="display:none">
-        <div class="auth-field"><label>Nome</label><input type="text" id="regName" placeholder="Seu nome"></div>
-        <div class="auth-field"><label>Email</label><input type="email" id="regEmail" placeholder="seu@email.com"></div>
-        <div class="auth-field"><label>Senha</label><input type="password" id="regPass" placeholder="••••••••"></div>
-        <button class="auth-btn-main" onclick="doRegister()">CRIAR CONTA</button>
-      </div>
-    </div>
+<div id="auth" class="container">
+  <h2>AllFit</h2>
+
+  <div id="login">
+    <input id="loginEmail" placeholder="Email">
+    <input id="loginPass" type="password" placeholder="Senha">
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <div id="register">
+    <input id="regName" placeholder="Nome">
+    <input id="regEmail" placeholder="Email">
+    <input id="regPass" type="password" placeholder="Senha">
+    <button onclick="register()">Criar conta</button>
   </div>
 </div>
 
-<div class="screen" id="onboardScreen">
-  <div class="ob-wrap">
-    <div class="card-title" style="font-size:24px">Personalizar Perfil</div>
-    <div class="ob-field"><label>Data de início</label><input type="date" id="obStartDate"></div>
-    <div class="ob-field"><label>Objetivo</label>
-      <select id="obGoal"><option value="Perder gordura">Perder gordura</option><option value="Ganhar músculo">Ganhar músculo</option><option value="Manutenção">Manutenção</option></select>
-    </div>
-    <div class="ob-field">
-      <label>Cole seu plano de treino (Opcional)</label>
-      <textarea id="obWorkoutText" placeholder="Ex: Segunda: Peito e Tríceps..."></textarea>
-      <div style="font-size:10px; color:var(--muted); margin-top:4px">Isso ajudará a ajustar sua recomendação de dieta.</div>
-    </div>
-    <button class="auth-btn-main" onclick="saveOnboard()">SALVAR E COMEÇAR</button>
+<div id="app" class="container" style="display:none">
+
+  <div class="card">
+    <h3>Refeições (editar horários)</h3>
+
+    <label>Café da manhã</label>
+    <input type="time" onchange="updateMeal('cafe', this.value)">
+
+    <label>Almoço</label>
+    <input type="time" onchange="updateMeal('almoco', this.value)">
+
+    <label>Jantar</label>
+    <input type="time" onchange="updateMeal('jantar', this.value)">
   </div>
-</div>
 
-<div class="screen" id="mainScreen">
-  <nav>
-    <div class="auth-brand" style="font-size:18px"><span>ALL</span>FIT</div>
-    <div class="nav-tabs">
-      <button class="nav-tab active" onclick="goTo('dash')">Home</button>
-      <button class="nav-tab" onclick="goTo('dieta')">Dieta</button>
-      <button class="nav-tab" onclick="goTo('config')">Sair</button>
-    </div>
-  </nav>
-
-  <div class="scroll-area">
-    <div class="page active" id="dash" style="padding:16px">
-      <div class="card-title" id="greetName">Olá!</div>
-      <div class="macro-grid">
-        <div class="macro-card"><div class="macro-val" id="kcalVal">0</div><div class="macro-lbl">kcal consumidas</div></div>
-        <div class="macro-card"><div class="macro-val" id="metaVal">1500</div><div class="macro-lbl">meta diária</div></div>
-      </div>
-    </div>
-
-    <div class="page" id="dieta" style="padding:16px">
-      <div class="card-title">Minha Dieta</div>
-      <div id="mealBlocks"></div>
-    </div>
+  <div class="card">
+    <h3>Upload de Treino</h3>
+    <input type="file" id="fileTreino">
+    <button onclick="uploadTreino()">Importar treino</button>
   </div>
-</div>
+
+  <div class="card">
+    <h3>Dieta gerada</h3>
+    <p id="dieta"></p>
+  </div>
 
 </div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-/* ===== DATA & STATE ===== */
-const DIET_PLANS = {
-  'Perda de gordura': { kcal: 1500, template: [
-    { label: 'Café', time: '07:00', opts: ['3 ovos + Pão integral', 'Iogurte + Fruta'], kcal: [350, 280] },
-    { label: 'Almoço', time: '12:00', opts: ['Frango + Arroz integral + Salada'], kcal: [500] },
-    { label: 'Jantar', time: '19:00', opts: ['Omelete + Legumes', 'Atum + Salada'], kcal: [300, 250] }
-  ]},
-  'Ganhar músculo': { kcal: 2200, template: [
-    { label: 'Café', time: '07:00', opts: ['4 ovos + Aveia + Banana'], kcal: [550] },
-    { label: 'Almoço', time: '12:00', opts: ['Carne + Arroz + Feijão'], kcal: [700] },
-    { label: 'Jantar', time: '19:00', opts: ['Frango + Batata Doce'], kcal: [600] }
-  ]}
-};
 
-let S = JSON.parse(localStorage.getItem('af_state') || '{"meals":{}, "mealTimes":{}}');
-let U = JSON.parse(localStorage.getItem('af_user') || 'null');
-
-/* ===== AUTH ===== */
-function switchAuthTab(tab){
-  document.getElementById('authLoginForm').style.display = tab==='login'?'block':'none';
-  document.getElementById('authRegisterForm').style.display = tab==='register'?'block':'none';
-  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
-  document.getElementById('tabReg').classList.toggle('active', tab==='register');
+function register(){
+  const user = {
+    name: regName.value,
+    email: regEmail.value,
+    pass: regPass.value
+  }
+  localStorage.setItem('user', JSON.stringify(user));
+  alert('Conta criada!');
 }
 
-function doRegister(){
-  const name = document.getElementById('regName').value;
-  const email = document.getElementById('regEmail').value;
-  const pass = document.getElementById('regPass').value;
-  if(!name || !email || !pass) return toast('Preencha tudo');
-  U = { name, email, pass };
-  localStorage.setItem('user_'+email, JSON.stringify(U));
-  localStorage.setItem('af_user', JSON.stringify(U));
-  showScreen('onboardScreen');
+function login(){
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  if(user && user.email === loginEmail.value && user.pass === loginPass.value){
+    auth.style.display = 'none';
+    app.style.display = 'block';
+  }else{
+    alert('Login inválido');
+  }
 }
 
-function doLogin(){
-  const email = document.getElementById('loginEmail').value;
-  const pass = document.getElementById('loginPass').value;
-  let saved = JSON.parse(localStorage.getItem('user_'+email));
-  if(saved && saved.pass === pass){
-    U = saved;
-    localStorage.setItem('af_user', JSON.stringify(U));
-    enterApp();
-  } else toast('Dados incorretos');
+function updateMeal(tipo, horario){
+  let data = JSON.parse(localStorage.getItem('data') || '{}');
+  if(!data.meals) data.meals = {};
+
+  data.meals[tipo] = horario;
+
+  localStorage.setItem('data', JSON.stringify(data));
 }
 
-/* ===== ONBOARD ===== */
-function saveOnboard(){
-  const goal = document.getElementById('obGoal').value;
-  const workout = document.getElementById('obWorkoutText').value;
-  U.goal = goal;
-  U.workout = workout;
-  
-  // Lógica simples: se o treino for pesado/longo, aumenta um pouco a meta (simulação)
-  S.dietPlan = goal;
-  localStorage.setItem('af_user', JSON.stringify(U));
-  save();
-  enterApp();
+function uploadTreino(){
+  const file = document.getElementById('fileTreino').files[0];
+
+  if(!file) return alert('Selecione um arquivo');
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    let treino;
+
+    try{
+      treino = JSON.parse(e.target.result);
+    }catch{
+      treino = e.target.result.split('\n');
+    }
+
+    let data = JSON.parse(localStorage.getItem('data') || '{}');
+    data.treino = treino;
+
+    localStorage.setItem('data', JSON.stringify(data));
+
+    gerarDieta();
+  }
+
+  reader.readAsText(file);
 }
 
-/* ===== APP LOGIC ===== */
-function enterApp(){
-  showScreen('mainScreen');
-  document.getElementById('greetName').textContent = 'Olá, ' + U.name;
-  updateDash();
+function gerarDieta(){
+  let data = JSON.parse(localStorage.getItem('data') || '{}');
+
+  if(!data.treino) return;
+
+  let intensidade = data.treino.length;
+
+  let dieta;
+
+  if(intensidade > 5){
+    dieta = 'Alta intensidade: 2000 kcal | 140g proteína';
+  }else{
+    dieta = 'Baixa intensidade: 1500 kcal | 110g proteína';
+  }
+
+  document.getElementById('dieta').innerText = dieta;
 }
 
-function updateDash(){
-  const plan = DIET_PLANS[S.dietPlan || 'Perda de gordura'];
-  document.getElementById('metaVal').textContent = plan.kcal;
-  let consumed = 0;
-  Object.entries(S.meals).forEach(([idx, opt]) => {
-    consumed += plan.template[idx].kcal[opt] || 0;
-  });
-  document.getElementById('kcalVal').textContent = consumed;
-}
-
-function buildDieta(){
-  const planName = S.dietPlan || 'Perda de gordura';
-  const plan = DIET_PLANS[planName];
-  const container = document.getElementById('mealBlocks');
-  container.innerHTML = '';
-
-  plan.template.forEach((m, i) => {
-    const currentTime = S.mealTimes[i] || m.time;
-    const block = document.createElement('div');
-    block.className = 'meal-block';
-    block.innerHTML = `
-      <div class="meal-header">
-        <span style="font-weight:700; font-size:12px">${m.label}</span>
-        <input type="time" class="meal-time-input" value="${currentTime}" onchange="updateMealTime(${i}, this.value)">
-      </div>
-      <div class="meal-opts">
-        ${m.opts.map((opt, j) => `
-          <div class="meal-opt ${S.meals[i] === j ? 'selected' : ''}" onclick="selectMeal(${i}, ${j})">
-            ${opt}
-          </div>
-        `).join('')}
-      </div>
-    `;
-    container.appendChild(block);
-  });
-}
-
-function updateMealTime(index, value){
-  S.mealTimes[index] = value;
-  save();
-  toast('Horário atualizado');
-}
-
-function selectMeal(mealIdx, optIdx){
-  if(S.meals[mealIdx] === optIdx) delete S.meals[mealIdx];
-  else S.meals[mealIdx] = optIdx;
-  save();
-  buildDieta();
-  updateDash();
-}
-
-/* ===== UTILS ===== */
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-function goTo(page){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(page).classList.add('active');
-  if(page === 'dieta') buildDieta();
-  if(page === 'config') { localStorage.removeItem('af_user'); location.reload(); }
-}
-
-function toast(m){
-  const t = document.getElementById('toast');
-  t.textContent = m; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-function save(){ localStorage.setItem('af_state', JSON.stringify(S)); }
-
-window.onload = () => { if(U) enterApp(); };
 </script>
+
 </body>
 </html>
