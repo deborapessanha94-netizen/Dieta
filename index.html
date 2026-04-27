@@ -277,36 +277,27 @@ nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 16p
 <body>
 <div id="appShell">
 
-<!-- AUTH -->
+<!-- WELCOME / NAME SCREEN -->
 <div class="screen active" id="authScreen">
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;background:var(--bg);overflow-y:auto">
-    <div class="auth-logo">
-      <svg width="64" height="64" viewBox="0 0 60 60" fill="none" style="display:block;margin:0 auto 12px">
-        <circle cx="30" cy="30" r="28" stroke="var(--acc-solid)" stroke-width="2.5" stroke-dasharray="6 4"/>
-        <ellipse cx="30" cy="30" rx="14" ry="14" fill="none" stroke="var(--acc-solid)" stroke-width="2"/>
-        <path d="M22 30 Q30 20 38 30" stroke="var(--acc-solid)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <circle cx="30" cy="30" r="3" fill="var(--acc-solid)"/>
-      </svg>
-      <div class="auth-brand"><span>ALL</span>FIT</div>
-      <div class="auth-sub">Training &amp; Diet</div>
+    <svg width="80" height="80" viewBox="0 0 60 60" fill="none" style="margin-bottom:16px">
+      <circle cx="30" cy="30" r="28" stroke="var(--acc-solid)" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <ellipse cx="30" cy="30" rx="14" ry="14" fill="none" stroke="var(--acc-solid)" stroke-width="2"/>
+      <path d="M22 30 Q30 20 38 30" stroke="var(--acc-solid)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <circle cx="30" cy="30" r="3" fill="var(--acc-solid)"/>
+    </svg>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:56px;letter-spacing:4px;color:var(--text);margin-bottom:4px">ALL<span style="color:var(--acc-solid)">FIT</span></div>
+    <div style="font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px">Training &amp; Diet</div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;width:100%;max-width:360px;box-shadow:0 8px 32px var(--shadow)">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--text);margin-bottom:6px">Qual o seu nome?</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:20px">Vou usar para personalizar o app pra você 😊</div>
+      <input type="text" id="welcomeName" placeholder="Digite seu nome..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--text);outline:none;margin-bottom:16px;transition:.2s" onkeydown="if(event.key==='Enter')doWelcome()" onfocus="this.style.borderColor='var(--acc-solid)'" onblur="this.style.borderColor='var(--border)'">
+      <button onclick="doWelcome()" style="width:100%;background:var(--acc-solid);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;cursor:pointer">ENTRAR</button>
     </div>
-    <div class="auth-card">
-      <div class="auth-tabs" id="authTabs">
-        <div class="auth-tab active" onclick="switchAuthTab('login')">Entrar</div>
-        <div class="auth-tab" onclick="switchAuthTab('register')">Criar conta</div>
-      </div>
-      <div id="authLoginForm">
-        <div class="auth-field"><label>Email</label><input type="email" id="loginEmail" placeholder="seu@email.com"></div>
-        <div class="auth-field"><label>Senha</label><input type="password" id="loginPass" placeholder="••••••••"></div>
-        <button class="auth-btn-main" onclick="doLogin()">ENTRAR</button>
-      </div>
-      <div id="authRegisterForm" style="display:none">
-        <div class="auth-field"><label>Nome</label><input type="text" id="regName" placeholder="Seu nome"></div>
-        <div class="auth-field"><label>Email</label><input type="email" id="regEmail" placeholder="seu@email.com"></div>
-        <div class="auth-field"><label>Senha</label><input type="password" id="regPass" placeholder="••••••••"></div>
-        <button class="auth-btn-main" onclick="doRegister()">CRIAR CONTA</button>
-      </div>
-      </div>
+    <div style="margin-top:24px;text-align:center;width:100%;max-width:360px">
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Escolha o tema de cores</div>
+      <div id="welcomeThemePicker" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
+    </div>
   </div>
 </div>
 
@@ -422,6 +413,11 @@ nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 16p
         <div style="font-size:13px;line-height:1.65;font-style:italic;margin-bottom:4px" id="motivQuote">Carregando frase do dia...</div>
         <div style="font-size:11px;opacity:.8;font-weight:600" id="motivAuthor"></div>
       </div>
+      <!-- Theme picker on Home -->
+      <div class="card" style="margin-bottom:10px;padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">🎨 Tema e cores</div>
+        <div id="dashThemePicker" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      </div>
       <!-- Instagram share -->
       <div class="card" style="margin-bottom:10px">
         <div class="card-title" style="margin-bottom:8px">📱 Compartilhar no Instagram</div>
@@ -529,11 +525,28 @@ nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 16p
 
     <!-- COMPRAS -->
     <div class="page" id="compras">
+      <!-- Totalizador -->
+      <div style="background:linear-gradient(135deg,var(--acc-solid),var(--acc2));color:#fff;border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px">Total da compra</div>
+          <div style="font-size:12px;opacity:.85">Plano: <span id="comprasPlanLabel">—</span></div>
+        </div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px" id="totalGasto">R$ 0,00</div>
+      </div>
+      <!-- Adicionar item customizado -->
+      <div class="card" style="padding:12px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">+ Adicionar item</div>
+        <div style="display:flex;gap:6px">
+          <input id="newItemName" placeholder="Nome do item..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none">
+          <button onclick="addCustomItem()" style="background:var(--acc-solid);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer">+</button>
+        </div>
+      </div>
       <div class="card">
-        <div class="card-title">Lista semanal 🛒</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Baseada no seu plano: <strong id="comprasPlanLabel">—</strong></div>
         <div id="buyList"></div>
-        <button class="clear-btn" onclick="clearCompras()">Limpar marcados</button>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="clear-btn" style="flex:1" onclick="clearCompras()">Limpar marcados</button>
+          <button class="clear-btn" style="flex:1;border-color:var(--acc-solid);color:var(--acc-text)" onclick="clearAllCompras()">Limpar tudo</button>
+        </div>
       </div>
     </div>
 
@@ -564,6 +577,12 @@ nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 16p
         <div class="card-title">Refeições ocultas</div>
         <div id="hiddenMealsList" style="font-size:13px;color:var(--muted)">Nenhuma refeição oculta</div>
       </div>
+      <!-- Editar imagens dos treinos -->
+      <div class="card">
+        <div class="card-title">🏋️ Imagens dos treinos</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Troque a imagem de qualquer treino. O treino exibido será atualizado automaticamente.</div>
+        <div style="display:flex;flex-direction:column;gap:10px" id="treinoImgEditList"></div>
+      </div>
       <!-- Period toggle — only shown for female users -->
       <div class="card" id="periodConfigCard" style="display:none">
         <div class="card-title">🌸 Ciclo menstrual</div>
@@ -589,6 +608,7 @@ nav{background:var(--nav-bg);border-bottom:1px solid var(--border);padding:0 16p
           <span onclick="rateStar(5)" style="cursor:pointer;opacity:.3;transition:.2s" class="star-item">⭐</span>
         </div>
         <textarea id="feedbackText" placeholder="Deixe sua sugestão de melhoria do app..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;resize:vertical;min-height:80px;margin-bottom:8px"></textarea>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:8px">💡 O feedback será enviado por formulário web para o e-mail da Debora.</div>
         <button onclick="sendFeedback()" style="width:100%;background:var(--acc-solid);color:#fff;border:none;border-radius:10px;padding:12px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;cursor:pointer">ENVIAR FEEDBACK</button>
       </div>
       <button class="logout-btn" onclick="doLogout()">🚪 Sair da conta</button>
@@ -900,14 +920,19 @@ if(S.date!==today){
 }
 
 function save(){localStorage.setItem('afv5',JSON.stringify(S));}
-function saveUser(){localStorage.setItem('afUser5',JSON.stringify(U));}
+function saveUser(){
+  if(!U)return;
+  localStorage.setItem('afUser5',JSON.stringify(U));
+  // também salva pelo nome
+  if(U.name)localStorage.setItem('afUser5_'+U.name.toLowerCase().replace(/ /g,'_'),JSON.stringify(U));
+}
 
 /* ===== BOOT ===== */
 window.onload=function(){
   applyTheme(S.theme||'pink');
   document.getElementById('obStartDate').value=today;
-  if(U){enterApp();}else{showScreen('authScreen');}
-  checkMonthReminder();
+  buildWelcomeThemePicker();
+  if(U&&U.name){enterApp();}else{showScreen('authScreen');}
 };
 
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
@@ -1012,14 +1037,8 @@ function switchAuthTab(tab){
 }
 function doLogin(){
   const email=document.getElementById('loginEmail').value.trim();
-  const pass=document.getElementById('loginPass').value;
-  if(!email||!pass){toast('Preencha email e senha');return;}
-  U=JSON.parse(localStorage.getItem('afUser5_'+email)||'null');
-  if(!U){toast('Conta não encontrada.');return;}
-  if(U.pass!==pass){toast('Senha incorreta');return;}
-  localStorage.setItem('afUser5',JSON.stringify(U));
-  if(!U.weight){showScreen('onboardScreen');loadOnboard();}
-  else{enterApp();}
+  // login desativado — apenas nome é necessário
+  doWelcome();
 }
 function doRegister(){
   const name=document.getElementById('regName').value.trim();
@@ -1396,7 +1415,14 @@ function buildCompras(){
       <div class="buy-cb"></div><div class="buy-text">${item}</div>
     </div>`).join('')}`).join('');
 }
-function toggleBuy(el,item){if(!S.compras)S.compras={};S.compras[item]=!S.compras[item];el.classList.toggle('checked',S.compras[item]);save();}
+function toggleBuy(el,item){
+  // el pode ser o buy-cb ou o buy-item; sempre queremos o buy-item
+  const row=el.classList.contains('buy-item')?el:el.closest('.buy-item')||el;
+  if(!S.compras)S.compras={};
+  S.compras[item]=!S.compras[item];
+  row.classList.toggle('checked',S.compras[item]);
+  save();
+}
 function clearCompras(){S.compras={};save();buildCompras();}
 
 /* ===== NAV ===== */
@@ -1660,6 +1686,8 @@ function shareInstagram(){
 /* ── DYNAMIC COMPRAS based on plan ── */
 function buildComprasDynamic(){
   const ch=S.compras||{};
+  const prices=S.compraPrices||{};
+  const custom=S.comprasCustom||[];
   const plan=S.dietPlan||'Perda de gordura';
   const base={
     'Proteínas':['Peito de frango — 1kg','Ovos — 2 dúzias','Atum em lata (água) — 4 unid.','Carne moída patinho — 500g','Iogurte grego natural — 6 unid.','Whey protein'],
@@ -1668,16 +1696,61 @@ function buildComprasDynamic(){
     'Legumes e folhas':['Brócolis ou abobrinha','Alface, rúcula ou espinafre','Tomate, pepino, cenoura','Cebola e alho'],
     'Suplementos':['Creatina monohidratada','Cafeína em cápsula 100–200mg','Vitamina B12 + D3'],
   };
-  if(plan==='Ganho muscular')base['Carboidratos'].push('Macarrão integral — 500g','Granola — 300g');
-  if(plan==='Definição')base['Proteínas'].push('Clara de ovo (caixinha)','Tilápia ou salmão — 500g');
+  if(plan==='Ganho muscular'){base['Carboidratos'].push('Macarrão integral — 500g','Granola — 300g');}
+  if(plan==='Definição'){base['Proteínas'].push('Clara de ovo (caixinha)','Tilápia ou salmão — 500g');}
   if(U&&U.gender==='F'){base['Proteínas'].push('Lentilha — 500g (ferro 🌸)');base['Legumes e folhas'].push('Espinafre extra — (ferro/magnésio)');}
+  if(custom.length)base['Meus itens']=custom;
   const lbl=document.getElementById('comprasPlanLabel');if(lbl)lbl.textContent=plan;
+  function itemRow(item,deletable){
+    const price=prices[item]||'';
+    const si=item.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return`<div class="buy-item${ch[item]?' checked':''}" style="gap:5px;align-items:center;padding:7px 2px">
+      <div class="buy-cb" onclick="toggleBuyItem(this,'${si}')"></div>
+      <div class="buy-text" style="flex:1;cursor:pointer;font-size:12px" onclick="toggleBuyItem(this.previousElementSibling,'${si}')">${item}</div>
+      <span style="font-size:10px;color:var(--muted)">R$</span>
+      <input type="number" step="0.01" min="0" placeholder="0,00" value="${price}"
+        onclick="event.stopPropagation()"
+        oninput="saveItemPrice('${si}',this.value)"
+        style="width:62px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:3px 5px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text);outline:none;text-align:right;flex-shrink:0">
+      ${deletable?`<button onclick="event.stopPropagation();deleteItem('${si}')" style="background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0">🗑</button>`:`<div style="width:18px;flex-shrink:0"></div>`}
+    </div>`;
+  }
   document.getElementById('buyList').innerHTML=Object.entries(base).map(([cat,items])=>`
     <div class="cat-title">${cat}</div>
-    ${items.map(item=>`<div class="buy-item${ch[item]?' checked':''}" onclick="toggleBuy(this,'${item.replace(/'/g,"\\'")}')">
-      <div class="buy-cb"></div><div class="buy-text">${item}</div>
-    </div>`).join('')}`).join('');
+    ${items.map(item=>itemRow(item,cat==='Meus itens')).join('')}`).join('');
+  updateTotal();
 }
+function toggleBuyItem(cbEl,item){
+  const row=cbEl.closest('.buy-item')||cbEl.parentElement;
+  if(!S.compras)S.compras={};
+  S.compras[item]=!S.compras[item];
+  row.classList.toggle('checked',S.compras[item]);
+  save();
+}
+function saveItemPrice(item,val){
+  if(!S.compraPrices)S.compraPrices={};
+  S.compraPrices[item]=parseFloat(val)||0;save();updateTotal();
+}
+function updateTotal(){
+  const total=Object.values(S.compraPrices||{}).reduce((a,b)=>a+(parseFloat(b)||0),0);
+  const el=document.getElementById('totalGasto');
+  if(el)el.textContent='R$ '+total.toFixed(2).replace('.',',');
+}
+function addCustomItem(){
+  const inp=document.getElementById('newItemName');
+  const name=(inp.value||'').trim();
+  if(!name){toast('Digite o nome do item');return;}
+  if(!S.comprasCustom)S.comprasCustom=[];
+  if(S.comprasCustom.includes(name)){toast('Item já na lista');return;}
+  S.comprasCustom.push(name);save();inp.value='';buildCompras();toast('Item adicionado ✅');
+}
+function deleteItem(item){
+  if(S.comprasCustom)S.comprasCustom=S.comprasCustom.filter(x=>x!==item);
+  if(S.compraPrices)delete S.compraPrices[item];
+  if(S.compras)delete S.compras[item];
+  save();buildCompras();toast('Item removido');
+}
+function clearAllCompras(){S.compras={};S.compraPrices={};S.comprasCustom=[];save();buildCompras();toast('Lista limpa!');}
 
 /* ── PATCHED enterApp ── */
 const _origEnterApp=enterApp;
@@ -1912,6 +1985,238 @@ function updateDash(){
   document.getElementById('waterDisp').textContent=(S.water||0)+' ml';
   const dots=document.getElementById('waterDots');dots.innerHTML='';
   for(let i=0;i<8;i++){const d=document.createElement('div');d.className='water-dot'+(i<Math.floor((S.water||0)/250)?' filled':'');dots.appendChild(d);}
+}
+
+/* ============================================================
+   ALLFIT v4 — Novas funções
+   ============================================================ */
+
+/* ── WELCOME THEME PICKER ── */
+function buildWelcomeThemePicker(){
+  const el=document.getElementById('welcomeThemePicker');if(!el)return;
+  const cur=S.theme||'pink';
+  const swatches=[
+    {id:'pink',color:'#f72585',label:'Rosa'},
+    {id:'pink-black',color:'#1a0010',label:'Rosa Noite'},
+    {id:'pink-white',color:'#fff',border:'#f72585',label:'Rosa Claro'},
+    {id:'blue',color:'#3a86ff',label:'Azul'},
+    {id:'blue-black',color:'#000e1e',label:'Azul Noite'},
+    {id:'yellow',color:'#ffbe0b',label:'Amarelo'},
+    {id:'green',color:'#06d6a0',label:'Verde'},
+    {id:'green-black',color:'#001a0e',label:'Verde Noite'},
+    {id:'gray',color:'#8d99ae',label:'Cinza'},
+    {id:'gray-black',color:'#0e1014',label:'Cinza Noite'},
+  ];
+  el.innerHTML=swatches.map(t=>`
+    <div class="wt-swatch${cur===t.id?' active':''}" 
+      style="background:${t.color};${t.border?'border-color:'+t.border:''}" 
+      title="${t.label}"
+      onclick="setWelcomeTheme('${t.id}',this)"></div>`).join('');
+}
+function setWelcomeTheme(id,el){
+  S.theme=id;save();applyTheme(id);
+  document.querySelectorAll('.wt-swatch').forEach(s=>s.classList.remove('active'));
+  if(el)el.classList.add('active');
+  // atualiza dash também se estiver aberto
+  buildDashThemePicker();
+}
+
+/* ── DASH THEME PICKER (mini) ── */
+function buildDashThemePicker(){
+  const el=document.getElementById('dashThemePicker');if(!el)return;
+  const cur=S.theme||'pink';
+  const swatches=[
+    {id:'pink',color:'#f72585'},{id:'pink-black',color:'#1a0010'},{id:'pink-white',color:'#fff',border:'#f72585'},
+    {id:'blue',color:'#3a86ff'},{id:'blue-black',color:'#000e1e'},{id:'blue-white',color:'#fff',border:'#3a86ff'},
+    {id:'yellow',color:'#ffbe0b'},{id:'yellow-black',color:'#100e00'},
+    {id:'green',color:'#06d6a0'},{id:'green-black',color:'#001a0e'},
+    {id:'gray',color:'#8d99ae'},{id:'gray-black',color:'#0e1014'},
+  ];
+  el.innerHTML=swatches.map(t=>`
+    <div style="width:28px;height:28px;border-radius:50%;background:${t.color};border:3px solid ${cur===t.id?'var(--acc-text)':'transparent'};${t.border?'border-color:'+(cur===t.id?'var(--acc-text)':t.border)+';outline:1px solid '+t.border:''}; cursor:pointer;transition:.2s;transform:${cur===t.id?'scale(1.2)':'scale(1)'}"
+      title="${t.id}"
+      onclick="quickTheme('${t.id}',this)"></div>`).join('');
+}
+function quickTheme(id,el){
+  S.theme=id;save();applyTheme(id);
+  buildDashThemePicker();
+  buildWelcomeThemePicker();
+  toast('Tema alterado!');
+}
+
+/* ── NUTRI PLAN OVERLAY sobre foto ── */
+function renderNutriCard(){
+  const nc=document.getElementById('nutriPlanCard');if(!nc)return;
+  const plan=DIET_PLANS[S.dietPlan||'Perda de gordura'];
+  // Gera refeições do plano como overlay
+  const meals=getMealTemplate();
+  const mealOverlay=meals.map(m=>`
+    <div class="nutri-plan-item">
+      <strong>${m.label} — ${m.time}</strong>
+      ${m.opts[0]}
+    </div>`).join('');
+
+  if(S.nutriImg){
+    nc.innerHTML=`<div class="card">
+      <div class="card-title">📋 Plano alimentar</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Foto do plano + sugestões baseadas no seu objetivo (${S.dietPlan||'Perda de gordura'}):</div>
+      <div class="nutri-overlay-card">
+        <img class="nutri-overlay-img" src="${S.nutriImg}">
+        <div class="nutri-plan-overlay">${mealOverlay}</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px">Deslize a imagem para ver as sugestões do plano sobrepostas</div>
+    </div>`;
+  } else if(S.nutriText){
+    nc.innerHTML=`<div class="card">
+      <div class="card-title">📋 Plano alimentar</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6;background:var(--bg3);border-radius:8px;padding:10px;white-space:pre-wrap">${S.nutriText}</div>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--acc-text);margin-bottom:6px">Sugestões do app (${S.dietPlan||'Perda de gordura'}):</div>
+        ${meals.map(m=>`<div style="background:var(--bg3);border-radius:8px;padding:7px 10px;margin-bottom:5px;font-size:12px"><strong style="color:var(--acc-text)">${m.label} ${m.time}</strong> — ${m.opts[0]}</div>`).join('')}
+      </div>
+    </div>`;
+  } else {
+    nc.style.display='none';
+    return;
+  }
+  nc.style.display='block';
+}
+
+/* ── TREINO IMAGE EDITOR no Config ── */
+function buildTreinoImgEditList(){
+  const el=document.getElementById('treinoImgEditList');if(!el)return;
+  const keys=['A','B','C'];
+  const labels={A:'Treino A — Pernas',B:'Treino B — Upper',C:'Treino C — Posterior'};
+  el.innerHTML=keys.map(k=>{
+    const img=S.treinoImages&&S.treinoImages[k];
+    return`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--acc-text)">${labels[k]}</div>
+          <div style="font-size:11px;color:var(--muted)">${img?'Imagem personalizada ✅':'Usando exercícios padrão'}</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <label style="background:var(--acc-solid);color:#fff;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer">
+            ${img?'Trocar':'Anexar'}
+            <input type="file" accept="image/*" style="display:none" onchange="updateTreinoImg('${k}',this)">
+          </label>
+          ${img?`<button onclick="removeTreinoImg('${k}')" style="background:var(--bg2);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer">✕</button>`:''}
+        </div>
+      </div>
+      ${img?`<img src="${img}" style="width:100%;border-radius:8px;max-height:130px;object-fit:cover">`:''}
+    </div>`;
+  }).join('');
+}
+function updateTreinoImg(key,inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();r.onload=e=>{
+    if(!S.treinoImages)S.treinoImages={};
+    S.treinoImages[key]=e.target.result;save();
+    buildTreinoImgEditList();
+    // Atualiza treino se o selecionado for esse
+    if((S.treinoSel||'A')===key)buildTreino();
+    toast('Treino '+key+' atualizado! 📸');
+  };r.readAsDataURL(f);
+}
+function removeTreinoImg(key){
+  if(S.treinoImages)delete S.treinoImages[key];save();
+  buildTreinoImgEditList();
+  if((S.treinoSel||'A')===key)buildTreino();
+  toast('Imagem do treino '+key+' removida');
+}
+
+/* ── FEEDBACK via FormSubmit ── */
+async function sendFeedback(){
+  const txt=document.getElementById('feedbackText').value.trim();
+  if(!_rating){toast('Selecione pelo menos uma estrela ⭐');return;}
+  
+  // Método 1: FormSubmit (funciona sem servidor)
+  const formData=new FormData();
+  formData.append('_to','deborapessanha94@gmail.com');
+  formData.append('_subject','AllFit Feedback — '+_rating+' estrelas');
+  formData.append('_template','table');
+  formData.append('Avaliação',_rating+'/5 estrelas ⭐');
+  formData.append('Usuário',U?U.name:'Anônimo');
+  formData.append('Mensagem',txt||'(sem mensagem)');
+  formData.append('Data',new Date().toLocaleDateString('pt-BR'));
+  
+  try{
+    const res=await fetch('https://formsubmit.co/ajax/deborapessanha94@gmail.com',{
+      method:'POST',body:formData,
+      headers:{'Accept':'application/json'}
+    });
+    const data=await res.json();
+    if(data.success==='true'||data.success===true){
+      toast('Feedback enviado! Obrigada 💕');
+      document.getElementById('feedbackText').value='';
+      _rating=0;
+      document.querySelectorAll('.star-item').forEach(s=>s.style.opacity='.3');
+    }else{
+      fallbackFeedback(_rating,txt);
+    }
+  }catch(err){
+    fallbackFeedback(_rating,txt);
+  }
+}
+function fallbackFeedback(rating,txt){
+  // Fallback: abre mailto
+  const sub=encodeURIComponent('AllFit Feedback — '+rating+' estrelas');
+  const bod=encodeURIComponent('Avaliação: '+rating+'/5 ⭐\nUsuário: '+(U?U.name:'Anônimo')+'\n\n'+txt);
+  window.open('mailto:deborapessanha94@gmail.com?subject='+sub+'&body='+bod,'_blank');
+  toast('Abrindo email como alternativa...');
+}
+
+/* ── PATCHES sobre enterApp e goTo ── */
+// Sobrescreve enterApp para chamar builders extras
+const __enterAppOrig=enterApp;
+function enterApp(){
+  showScreen('mainScreen');applyTheme(S.theme||'pink');
+  const startD=new Date(((U&&U.startDate)||today)+'T00:00:00');
+  const todayD=new Date();
+  const diffDays=Math.floor((todayD-startD)/86400000);
+  S.selectedWeekOffset=Math.max(0,Math.floor(diffDays/7));
+  S.selectedDayOfWeek=diffDays>=0?diffDays%7:0;
+  save();
+  loadMotivation();
+  buildDashThemePicker();
+  updateDash();buildThemePicker();buildRoutineFields();updateProfile();checkMonthReminder();
+  if(U&&U.gender==='F'){const pc=document.getElementById('periodConfigCard');if(pc)pc.style.display='block';}
+  const pt=document.getElementById('periodToggle');if(pt)pt.checked=!!S.period;
+  if(S.period){
+    const sl=document.getElementById('periodSlider');const th=document.getElementById('periodThumb');
+    if(sl)sl.style.background='var(--acc-solid)';if(th)th.style.left='23px';
+    renderPeriodBanners();
+  }
+  if(S.nutriImg||S.nutriText){
+    const nc=document.getElementById('nutriPlanCard');
+    if(nc){nc.style.display='block';renderNutriCard();}
+  }
+  buildTreinoImgEditList();
+}
+
+// Sobrescreve goTo para chamar builders adicionais
+const __goToOrig=goTo;
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',['dash','dieta','treino','compras','config'][i]===page));
+  if(page==='dash'){buildDashThemePicker();}
+  if(page==='dieta')buildDieta();
+  if(page==='treino')buildTreino();
+  if(page==='compras')buildCompras();
+  if(page==='config'){buildThemePicker();buildHiddenList();buildRoutineFields();updateProfile();buildTreinoImgEditList();}
+}
+
+function doWelcome(){
+  const name=(document.getElementById('welcomeName').value||'').trim();
+  if(!name){toast('Digite seu nome para continuar 😊');return;}
+  const key='afUser5_'+name.toLowerCase().replace(/[^a-z0-9]/g,'_');
+  const saved=localStorage.getItem(key);
+  if(saved){U=JSON.parse(saved);}
+  else{U={name,startDate:today,gender:'F'};}
+  saveUser();
+  if(!U.weight){showScreen('onboardScreen');loadOnboard();}
+  else{enterApp();}
 }
 
 </script>
